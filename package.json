@@ -17,9 +17,6 @@
     "url": "https://github.com/camilohreina/react-projects/issues"
   },
   "homepage": "https://github.com/camilohreina/react-projects#readme",
-  "dependencies": {
-    "canvas-confetti": "1.6.0"
-  },
   "devDependencies": {
     "standard": "^17.1.0"
   },
