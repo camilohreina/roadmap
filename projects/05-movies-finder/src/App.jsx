@@ -1,4 +1,9 @@
 import './App.css'
+import responseMovies from './mocks/with-results.json'
+import withoutResults from './mocks/no-results.json'
+import { Movies } from './components/Movies'
+
+const movies = responseMovies.Search
 
 function App () {
   return (
@@ -11,7 +16,7 @@ function App () {
         </form>
       </header>
       <main>
-        Aquí van los resultados
+        <Movies movies={movies} />
       </main>
     </div>
   )
