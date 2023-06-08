@@ -1,11 +1,11 @@
 import './App.css'
-import responseMovies from './mocks/with-results.json'
-import withoutResults from './mocks/no-results.json'
+import { useRef } from 'react'
 import { Movies } from './components/Movies'
-
-const movies = responseMovies.Search
+import { useMovies } from './hooks/useMovies'
 
 function App () {
+  const { movies } = useMovies()
+
   return (
     <div className='page'>
       <header>
