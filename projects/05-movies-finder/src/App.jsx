@@ -38,8 +38,8 @@ function useSearch () {
 }
 
 function App () {
-  const { movies } = useMovies()
   const { search, setSearch, error } = useSearch()
+  const { movies, getMovies } = useMovies({ search })
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -49,7 +49,7 @@ function App () {
     /*  const fields = Object.fromEntries(new window.FormData(event.target))
     console.log(fields) */
 
-    console.log({ search })
+    getMovies({ search })
   }
 
   const handleChange = (event) => {
