@@ -1,7 +1,8 @@
 import './App.css'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Movies } from './components/Movies'
 import { useMovies } from './hooks/useMovies'
+import debounce from 'just-debounce-it'
 
 function useSearch () {
   const [search, setSearch] = useState('')
@@ -41,6 +42,13 @@ function App () {
   const { search, setSearch, error } = useSearch()
   const { movies, getMovies, loading } = useMovies({ search, sort })
 
+  // prevent debounce : esperar que el usuario termine para ejecutar el llamado
+  const debouncedGetMovies = useCallback(
+    debounce(search => {
+      getMovies({ search })
+    }, 300)
+    , [])
+
   const handleSubmit = (event) => {
     event.preventDefault()
 
@@ -57,11 +65,12 @@ function App () {
   }
 
   const handleChange = (event) => {
+    const newSearch = event.target.value
+    setSearch(newSearch)
+    debouncedGetMovies(newSearch)
     // Para obtener directamente el ultimo valor, recordar que el estado es asincrono
     /*     const newQuery = event.target.value
     if (newQuery.startsWith(' ')) return */
-
-    setSearch(event.target.value)
 
     // Validaciones directamente cuando cambia el field
     /*     if (newQuery === '') {
