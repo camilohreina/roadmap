@@ -1,7 +1,7 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useMemo } from 'react'
 import { searchMovies } from '../services/movies'
 
-export function useMovies ({ search }) {
+export function useMovies ({ search, sort }) {
   const [movies, setMovies] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
@@ -22,5 +22,12 @@ export function useMovies ({ search }) {
     }
   }
 
-  return { movies, getMovies, loading }
+  // UseMemo solo se utiliza cuando queremos que una función se ejecute solo cuando cambian algunas dependencias, no cada que se renderice
+  const sortedMovies = useMemo(() => {
+    return sort
+      ? [...movies].sort((a, b) => a.title.localeCompare(b.title))
+      : [...movies]
+  }, [sort, movies])
+
+  return { movies: sortedMovies, getMovies, loading }
 }

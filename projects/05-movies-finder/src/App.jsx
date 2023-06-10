@@ -11,7 +11,6 @@ function useSearch () {
   // Validaciones por useEffect
   useEffect(() => {
     if (isFirstInput.current) {
-      console.log('hola', search === '')
       isFirstInput.current = search === ''
       return
     }
@@ -38,8 +37,9 @@ function useSearch () {
 }
 
 function App () {
+  const [sort, setSort] = useState(false)
   const { search, setSearch, error } = useSearch()
-  const { movies, getMovies, loading } = useMovies({ search })
+  const { movies, getMovies, loading } = useMovies({ search, sort })
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -50,6 +50,10 @@ function App () {
     console.log(fields) */
 
     getMovies({ search })
+  }
+
+  const handleSort = () => {
+    setSort(!sort)
   }
 
   const handleChange = (event) => {
@@ -87,6 +91,7 @@ function App () {
             style={{ border: '1px solid transparent', borderColor: error ? 'red' : 'transparent' }}
             onChange={handleChange} value={search} name='query' placeholder='Avengers, The Matrix, Star Wars'
           />
+          <input type='checkbox' onChange={handleSort} checked={sort} />
           <button type='submit'>Search</button>
         </form>
         {error && <p style={{ color: 'red' }}>{error}</p>}
