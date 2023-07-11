@@ -1,42 +1,33 @@
-import { createContext, useState } from 'react'
+import { createContext, useReducer } from 'react'
+import { cartReducer, cartInitialState } from '../reducers/cart'
 
-// 1. Crear contexto
 export const CartContext = createContext()
 
-// 2. Crear Providers
+function useCartReducer () {
+  const [state, dispatch] = useReducer(cartReducer, cartInitialState)
+
+  const addToCart = product => dispatch({
+    type: 'ADD_TO_CART',
+    payload: product
+  })
+  const removeFromCart = product => dispatch({
+    type: 'REMOVE_FROM_CART',
+    payload: product
+  })
+  const clearCart = product => dispatch({
+    type: 'CLEAR_CART'
+  })
+
+  return { state, addToCart, removeFromCart, clearCart }
+}
+// La dependencia de usar React Context es MINIMA
 export function CartProvider ({ children }) {
-  const [cart, setCart] = useState([])
-
-  const addToCart = (product) => {
-    // Check if the product is already in the cart
-    const productInTheCartIndex = cart.findIndex(item => item.id === product.id)
-    if (productInTheCartIndex >= 0) {
-      const newCart = structuredClone(cart)
-      newCart[productInTheCartIndex].quantity += 1
-      return setCart(newCart)
-    }
-
-    // Product is not in the cart
-    setCart(prevState => [
-      ...prevState,
-      {
-        ...product,
-        quantity: 1
-      }
-    ])
-  }
-
-  const removeFromCart = product => {
-    setCart(prevState => cart.filter(item => item.id !== product.id))
-  }
-
-  const clearToCart = () => { setCart([]) }
-
+  const { state, addToCart, removeFromCart, clearCart } = useCartReducer()
   return (
     <CartContext.Provider value={{
-      cart,
+      cart: state,
       addToCart,
-      clearToCart,
+      clearCart,
       removeFromCart
     }}
     >
