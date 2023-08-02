@@ -1,4 +1,4 @@
-import { navigate } from "../Link"
+import { Link } from "../Link"
 export default function AboutPage() {
     return (
         <>
@@ -8,7 +8,7 @@ export default function AboutPage() {
                 alt='Foto de differnt'
             />
             <p>Differnt Esta creando un nuevo react router para uds</p>
-            <button onClick={() => navigate('/')}>Ir a home</button>
+            <Link to='/'>Ir a home</Link>
         </>
     )
 }
