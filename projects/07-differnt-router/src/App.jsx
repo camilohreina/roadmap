@@ -3,6 +3,8 @@ import HomePage from './pages/Home'
 import AboutPage from './pages/About'
 import { Router } from './Router'
 import Page404 from './404'
+import SearchPage from './Search'
+
 
 const routes = [
   {
@@ -12,6 +14,9 @@ const routes = [
   {
     path: '/about',
     Component: AboutPage
+  }, {
+    path: '/search/:query',
+    Component: SearchPage
   }
 ]
 
