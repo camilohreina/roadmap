@@ -2,7 +2,7 @@ import { lazy, Suspense } from 'react'
 
 
 import './App.css'
-import Page404 from './404'
+import Page404 from './pages/404'
 import SearchPage from './Search'
 
 import { Router } from './Router'
