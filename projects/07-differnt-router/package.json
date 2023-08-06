@@ -1,10 +1,14 @@
 {
   "name": "rourer",
+  "description": "Un router minimalistico para React.",
+  "author": "Camilo Hernandez <camilohreina.dev@gmail.com>",
   "private": false,
   "version": "0.0.1",
   "type": "module",
   "main": "lib/index.js",
   "module": "lib/index.js",
+  "repository": "camilohreina/rourer",
+  "license": "ISC",
   "exports": {
     ".": {
       "import": "./lib/index.js",
