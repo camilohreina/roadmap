@@ -45,6 +45,16 @@ const App = (): JSX.Element => {
     );
   };
 
+  const handleUpdateTitle = ({ id, title }: Pick<TodoType, "id" | "title">) => {
+    const newTodos = todos.map((todo) => {
+      if (todo.id === id) {
+        return { ...todo, title };
+      }
+      return todo;
+    });
+    setTodos(newTodos);
+  };
+
   const filteredTodos = todos.filter((todo) => {
     if (filterSelected === TODO_FILTERS.ACTIVE) return !todo.completed;
     if (filterSelected === TODO_FILTERS.COMPLETED) return todo.completed;
@@ -93,6 +103,7 @@ const App = (): JSX.Element => {
         onToggleCompleted={handleCompleted}
         onRemoveTodo={handleRemove}
         todos={filteredTodos}
+        setTitle={handleUpdateTitle}
       />
       <Footer
         activeCount={activeCount}
