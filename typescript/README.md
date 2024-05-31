@@ -1,5 +1,3 @@
-# TypeScript
-
 - Lenguaje de programación de código abierto desarrollado por Microsoft para extender JS
 - Tipado estáticamente
 - Permite colocar tipos de datos a las variables, funciones y otros elementos del codigo
@@ -72,7 +70,11 @@ const nombres: string[] = ['Juan', 'María', 'Pedro'];
 // Arreglo de booleanos:
 const valoresBool: boolean[] = [true, false, true];
 
-//etc (ya los veremos)
+// Arreglo vacio
+const arregloVacio: number[] = [];
+
+// Arreglo con union de tipos
+const arrayUnion: (string | boolean)[] = ['apple', true, 'orange', false];
 ```
 
 - Enum
@@ -97,6 +99,14 @@ enum Colores {
   Verde = 'verde',
   Azul = 'azul',
 }
+```
+
+- Objects
+
+```ts
+let car: { brand: string; year: number } = { brand: 'Toyota', year: 2020 };
+car.brand = 'Ford';
+//car.color = 'red';
 ```
 
 - Functions
@@ -125,6 +135,85 @@ function saludar(nombre: string, edad?: number): string {
 function saludar2(nombre: string, edad: number = 30): string {
   return `Hola, mi nombre es ${nombre} y tengo ${edad} años.`;
 }
+
+//Funciones con parametros de multiples tipos
+function processInput(value: string | number) {
+  if (typeof value === 'string') {
+    return value.toUpperCase();
+  }
+  return value.toFixed(2);
+}
+
+//Funciones de objetos como parametros de entrada y salida
+function createEmployee({ id }: { id: number }): {
+  id: number;
+  isActive: boolean;
+} {
+  return {
+    id,
+    isActive: id % 2 === 0,
+  };
+}
+//alternative like payload
+function createStudent(student: { id: number; name: string }): void {
+  console.log(`Welcome ${student.name} with id: ${student.id}`);
+}
+const newStudent = {
+  id: 1,
+  name: 'Juan',
+  email: 'juan@gg.com',
+};
+createStudent(newStudent); // si se lo come
+createStudent({ id: 2, name: 'Pedro', email: 'tod@gg.com' }); // no se lo come
+```
+
+- Alias
+
+```ts
+export type User {id: number, name: string, isActive: boolean}
+type StringOrNumber: string | number
+
+// Use Case 1 with array
+type Employee = { id: number; name: string; department: string };
+type Manager = { id: number; name: string; employees: Employee[] };
+
+type Staff = Employee | Manager;
+
+function printStaffDetails(staff: Staff): void {
+  console.log(staff.name);
+  if ('department' in staff) {
+    console.log(staff.department);
+  }
+  if ('employees' in staff) {
+    console.log(staff.employees);
+  }
+}
+
+const alice: Employee = { id: 1, name: 'Alice', department: 'Engineering' };
+const bob: Employee = { id: 2, name: 'Bob', department: 'Engineering' };
+
+const steve: Manager = { id: 2, name: 'Steve', employees: [alice, bob] };
+
+//Use Case 2 - Unin types
+type Book = { id: number; name: string; price: number };
+type DiscountedBook = Book & { discount: number };
+
+const book1: Book = { id: 1, name: 'Book1', price: 10 };
+const book2: Book = { id: 2, name: 'Book2', price: 20 };
+const discountedBook: DiscountedBook = {
+  id: 3,
+  name: 'Book3',
+  price: 30,
+  discount: 0.15,
+};
+
+//Use Case 3 - Computed props
+const propName = 'name';
+type Person = {
+  id: number;
+  [propName]: string;
+};
+let alicea: Person = { id: 1, [propName]: 'Alice' };
 ```
 
 - Interfaces
@@ -203,3 +292,14 @@ const sorteo = new Sorteo<number>('Loteria');
 sorteo.setTicket(1234);
 console.log(sorteo.gambling());
 ```
+
+- Strings con valores predefinidos
+
+```ts
+let requestStatus: 'success' | 'error' = 'success';
+```
+
+### Type vs. Interface
+
+- Se pueden usar los dos y el resultado es el mismo
+-
