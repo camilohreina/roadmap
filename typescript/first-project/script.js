@@ -1,1 +1,2 @@
-console.log('Hola mundo!');
+"use strict";
+console.log('Se ha aprendido a compilar un archivo de TypeScript a JavaScript.');
